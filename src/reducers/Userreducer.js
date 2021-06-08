@@ -1,13 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
+import {getUsers} from "../actions/Userfetch"
 
 export const Userreducer = createSlice({
   name: "users",
   initialState: {
-    data: [
-      {
-        id:1,name:"danussh"
-      }
-    ],
+    data: [],
+    loader:false
   },
   reducers:{
     addTodo:(state,action)=>{
@@ -22,6 +20,15 @@ export const Userreducer = createSlice({
       state.data=[...state.data.map((val)=>{
         return (val.id===action.payload.id)?{id:val.id,name:action.payload.name}: val
       })]
+    }
+  },
+  extraReducers:{
+    [getUsers.pending]:(state,action)=>{
+      state.loader=true
+    },
+    [getUsers.fulfilled]:(state,action)=>{
+      state.data=action.payload
+      state.loader=false
     }
   }
 

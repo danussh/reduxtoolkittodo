@@ -1,7 +1,11 @@
-import React,{useRef} from 'react'
+import React,{useRef,useEffect} from 'react'
 import {useSelector,useDispatch} from "react-redux"
 import { addTodo,deleteTodo,editTodo } from '../reducers/Userreducer'
+import {getUsers} from "../actions/Userfetch"
 const Home = () => {
+    useEffect(()=>{
+        dispatch(getUsers())
+    },[])
     const {data} = useSelector(state => state.users)
     const inputvalue = useRef("")
     const dispatch = useDispatch()
